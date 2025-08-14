@@ -1,6 +1,8 @@
 # Custom Chrome Home Page
 
 A fully customized Chrome-style home page built with **HTML**, **CSS**, and **JavaScript**. This project allows you to personalize your browsing experience with shortcuts, dynamic search, and custom backgrounds.
+![Uploading image.png…]()
+
 
 ## Features
 
