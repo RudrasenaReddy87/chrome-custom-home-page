@@ -43,9 +43,16 @@ Add social links from the sidebar.
 
 ## Future Improvements
 
-Sync shortcuts and settings across devices using a backend or cloud storage.
-Add theme options (dark/light/custom colors).
-Integrate Music Player, Weather, Clock, or News widgets, Fully Customized icons and dragable features
+- Sync shortcuts and settings across devices using a backend or cloud storage.
+- Add theme options (dark/light/custom colors).
+- Integrate Music Player, Weather, Clock, or News widgets.
+- Fully customizable and draggable icons.
+- Add animated transitions for a smoother user experience.
+- Implement search suggestions and auto-complete in the search bar.
+- Enable backup and restore functionality for user settings.
+- Add keyboard shortcuts for faster navigation.
+- Introduce custom font and style options.
+- Implement multi-language support.
 
 
    
