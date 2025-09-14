@@ -1,9 +1,3 @@
-<!-- 
-
-Author: Rudrasena Reddy
-Date: 14-08-2025 11:28:13
-
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +20,7 @@ body {
   font-family: 'Lato', sans-serif;
   color: white;
   position: relative;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -40,6 +35,8 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
+  margin: 10px;
+  flex-wrap: wrap;
 }
 
 .header-shortcuts {
@@ -217,7 +214,7 @@ header {
   height: fit-content;
   position: relative;
   margin-left: 40px;
-  margin-top: 80px;
+  margin-top: 20px;
 }
 .input-search {
   height: 50px;
@@ -259,13 +256,6 @@ header {
   background-color: transparent;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-}
-
-/* Responsive: hide text labels on small screens */
-@media (max-width: 700px) {
-  .shortcut span {
-    display: none;
-  }
 }
 
 /* Social Sidebar */
@@ -350,13 +340,865 @@ header {
   transform: scale(1.05);
 }
 
-/* Mobile responsiveness */
+
+
+/* Clock Widget */
+.clock-widget {
+  position: fixed;
+  top: 80px;
+  right: 15px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  min-width: 100px;
+  text-align: center;
+  z-index: 100;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+.clock-date {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-top: 5px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.909);
+}
+
+/* Quick Notes Widget */
+.notes-widget {
+  position: fixed;
+  bottom: 60px;
+  left: 15px;
+  background: rgba(0, 0, 0, 0.338);
+  padding: 10px 15px;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  min-width: 200px;
+  max-width: 300px;
+  z-index: 100;
+}
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.notes-header h3 {
+  margin: 0;
+  font-size: 14px;
+}
+.notes-content {
+  font-size: 13px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+.notes-textarea {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 5px;
+  color: white;
+  padding: 8px;
+  font-size: 13px;
+  resize: none;
+  min-height: 80px;
+}
+.notes-textarea:focus {
+  outline: none;
+  border-color: rgba(255,255,255,0.5);
+}
+
+/* Responsive adjustments */
 @media (max-width: 700px) {
+  .shortcut span {
+    display: none;
+  }
+  header {
+    padding: 8px 12px;
+  }
+  .search-box {
+    margin-left: 20px;
+    margin-top: 40px;
+  }
+  .input-search:focus {
+    width: 250px;
+  }
+  .clock-widget {
+    position: relative;
+    top: unset;
+    right: unset;
+    margin: 10px auto;
+    width: calc(100% - 40px);
+  }
+  .notes-widget {
+    position: relative;
+    bottom: unset;
+    left: unset;
+    margin: 10px auto;
+    width: calc(100% - 40px);
+  }
   #ownerLink {
     font-size: 12px;
     padding: 5px 10px;
   }
 }
+
+@media (max-width: 500px) {
+  .social-sidebar {
+    bottom: 10px;
+    top: unset;
+    transform: none;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    left: 0;
+    right: 0;
+  }
+  .social-sidebar:hover {
+    width: 100%;
+  }
+  .social-icon span {
+    display: none;
+  }
+  .social-sidebar:hover .social-icon span {
+    display: none;
+  }
+}
+
+
+
+/* Animation for widgets */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+.clock-widget, .notes-widget {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Todo List Widget - Redesigned */
+.todo-widget {
+  position: fixed;
+  top: 160px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  min-width: 250px;
+  max-width: 320px;
+  z-index: 100;
+  animation: slideIn 0.5s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+
+
+.todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.todo-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.todo-notification-badge {
+  background: #ff4757;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.todo-settings-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.todo-settings-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.todo-settings-btn.active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.todo-main-section {
+  padding: 16px 20px;
+}
+
+.todo-quick-add {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.todo-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.todo-add-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.todo-add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.todo-advanced-section {
+  display: none;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(248, 249, 250, 0.8);
+}
+
+.todo-advanced-section.show {
+  display: block;
+}
+
+.todo-advanced-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.todo-advanced-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.todo-advanced-form input,
+.todo-advanced-form select {
+  padding: 8px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 12px;
+}
+
+.todo-filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.todo-filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.todo-filter-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.todo-filter-select {
+  padding: 6px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background: white;
+  color: #333;
+  font-size: 11px;
+}
+
+.todo-list {
+  max-height: 250px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.todo-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.todo-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.todo-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.todo-item:hover {
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin: 0 -8px;
+}
+
+.todo-item.completed {
+  opacity: 0.6;
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.todo-checkbox:checked {
+  background: #667eea;
+  border-color: #667eea;
+}
+
+.todo-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.todo-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.todo-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.todo-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.todo-priority {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.priority-high {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+}
+
+.priority-medium {
+  background: linear-gradient(135deg, #ffd93d, #ffb142);
+  color: white;
+}
+
+.priority-low {
+  background: linear-gradient(135deg, #6bcf7f, #4ecdc4);
+  color: white;
+}
+
+.todo-category {
+  font-size: 11px;
+  color: #666;
+  font-style: italic;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+.todo-due-date {
+  font-size: 11px;
+  color: #ff6b6b;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.todo-due-date.overdue {
+  color: #ff4757;
+}
+
+.todo-due-date.due-soon {
+  color: #ffa502;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.todo-item:hover .todo-actions {
+  opacity: 1;
+}
+
+.todo-edit, .todo-delete {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.todo-edit {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.todo-edit:hover {
+  background: #667eea;
+  color: white;
+  transform: scale(1.1);
+}
+
+.todo-delete {
+  background: rgba(255, 71, 87, 0.1);
+  color: #ff4757;
+}
+
+.todo-delete:hover {
+  background: #ff4757;
+  color: white;
+  transform: scale(1.1);
+}
+
+.todo-empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.todo-empty-state h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: #666;
+}
+
+.todo-empty-state p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Notification styles */
+.todo-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slideInFromRight 0.5s ease-out;
+  max-width: 300px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.todo-notification.hide {
+  animation: slideOutToRight 0.5s ease-out forwards;
+}
+
+.todo-notification-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.todo-notification-message {
+  font-size: 12px;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments for todo widget */
+@media (max-width: 1024px) {
+  .todo-widget {
+    position: relative;
+    top: unset;
+    left: unset;
+    margin: 10px auto;
+    width: calc(100% - 40px);
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .todo-widget {
+    width: calc(100% - 20px);
+    margin: 10px 10px;
+  }
+
+  .todo-advanced-form {
+    grid-template-columns: 1fr;
+  }
+
+  .todo-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* Enhanced Notes */
+.notes-toolbar {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+.notes-btn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.notes-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+.notes-autosave {
+  font-size: 10px;
+  opacity: 0.7;
+  margin-top: 5px;
+}
+
+/* Responsive enhancements */
+@media (max-width: 1024px) {
+  .todo-widget {
+    position: relative;
+    top: unset;
+    left: unset;
+    margin: 10px auto;
+    width: calc(100% - 40px);
+  }
+  .alerts-widget {
+    position: relative;
+    bottom: unset;
+    right: unset;
+    margin: 10px auto;
+    width: calc(100% - 40px);
+  }
+}
+
+@media (max-width: 768px) {
+  .search-box {
+    margin-left: 10px;
+    margin-top: 50px;
+  }
+  .input-search:focus {
+    width: 200px;
+  }
+  .clock-widget, .notes-widget, .todo-widget, .alerts-widget {
+    width: calc(100% - 20px);
+    margin: 10px 10px;
+  }
+  .social-sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .social-sidebar:hover {
+    width: 100%;
+  }
+  .social-icon span {
+    display: none;
+  }
+}
+
+/* Advanced CSS Animations */
+
+/* 3D Card Flip */
+.advanced-flip {
+  perspective: 1000px;
+}
+.advanced-flip-card {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+.advanced-flip-card.flipped {
+  transform: rotateY(180deg);
+}
+.advanced-flip-front, .advanced-flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+.advanced-flip-back {
+  transform: rotateY(180deg);
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Morphing Shape */
+@keyframes morph {
+  0% { border-radius: 50%; transform: scale(1); }
+  25% { border-radius: 0; transform: scale(1.2); }
+  50% { border-radius: 50%; transform: scale(0.8); }
+  75% { border-radius: 0; transform: scale(1.1); }
+  100% { border-radius: 50%; transform: scale(1); }
+}
+.morphing {
+  animation: morph 4s ease-in-out infinite;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+}
+
+/* Particle Background */
+.particles {
+  position: relative;
+  overflow: hidden;
+}
+.particles::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  animation: particleFloat 20s linear infinite;
+  pointer-events: none;
+}
+@keyframes particleFloat {
+  0% { transform: translateY(0) translateX(0); }
+  33% { transform: translateY(-100vh) translateX(50vw); }
+  66% { transform: translateY(-200vh) translateX(-50vw); }
+  100% { transform: translateY(-300vh) translateX(0); }
+}
+
+/* Typewriter Effect */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid white;
+  white-space: nowrap;
+  animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: white; }
+}
+
+/* Loading Spinner */
+.loading {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Scroll-triggered Animation */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+.scroll-animate.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Advanced Hover Effects */
+.advanced-hover {
+  transition: all 0.3s ease;
+  position: relative;
+}
+.advanced-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+.advanced-hover:hover::before {
+  transform: translateX(100%);
+}
+.advanced-hover:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+.pulsing {
+  animation: pulse 2s infinite;
+}
+
+/* Gradient Animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.gradient-animated {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientShift 4s ease infinite;
+}
+
+
 </style>
 </head>
 <body>
@@ -376,6 +1218,64 @@ header {
     </div>
   </div>
 </header>
+
+<!-- Clock Widget -->
+<div class="clock-widget" id="clockWidget">
+  <div class="clock-time">00:00:00</div>
+  <div class="clock-date">Loading...</div>
+</div>
+
+<!-- Todo Toggle Button -->
+<div class="todo-toggle-btn" id="todoToggleBtn">
+  <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" fill="white">
+    <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+  </svg>
+</div>
+
+<!-- Todo List Widget -->
+<div class="todo-widget" id="todoWidget">
+  <div class="todo-header">
+    <h3>Todo List</h3>
+    <div class="todo-notification-badge" id="todoNotificationBadge" style="display: none;">0</div>
+    <button class="todo-settings-btn" id="todoSettingsBtn" onclick="toggleAdvancedSettings()">⚙️</button>
+  </div>
+
+  <div class="todo-main-section">
+    <div class="todo-quick-add">
+      <input type="text" class="todo-input" id="todoInput" placeholder="Add a new task...">
+      <button class="todo-add-btn" onclick="addTodo()">Add</button>
+    </div>
+    <div class="todo-list" id="todoList"></div>
+  </div>
+
+  <div class="todo-advanced-section" id="todoAdvancedSection">
+    <div class="todo-advanced-title">Advanced Options</div>
+
+    <div class="todo-advanced-form">
+      <input type="date" class="todo-due-date" id="todoDueDate">
+      <input type="time" class="todo-reminder" id="todoReminder" placeholder="Reminder Time">
+    </div>
+  </div>
+</div>
+
+<!-- Notes Widget -->
+<div class="notes-widget" id="notesWidget">
+  <div class="notes-header">
+    <h3>Quick Notes</h3>
+    <span style="cursor: pointer;" onclick="clearAllNotes()">✕</span>
+  </div>
+  <div class="notes-toolbar">
+    <button class="notes-btn" onclick="formatText('bold')">B</button>
+    <button class="notes-btn" onclick="formatText('italic')">I</button>
+    <button class="notes-btn" onclick="clearAllNotes()">Clear All</button>
+  </div>
+  <div class="notes-content">
+    <textarea class="notes-textarea" id="notesTextarea" placeholder="Type your notes here..." oninput="autoSaveNotes()"></textarea>
+    <div class="notes-autosave" id="autosaveIndicator">Auto-saved</div>
+  </div>
+</div>
+
+
 
 <!-- Search -->
 <div class="search-box">
@@ -401,15 +1301,42 @@ header {
     <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub">
     <span>GitHub</span>
   </div>
-  <div class="social-plus" onclick="addSocialShortcut()">+</div>
 </div>
 
 <!-- Bottom-right owner LinkedIn -->
 <a href="https://www.linkedin.com/in/bodireddyrudrasenareddy/" id="ownerLink" target="_blank">Rudrasena Reddy</a>
 
+<!-- Reminder Sound -->
+<audio id="reminderSound" preload="auto">
+
 <script>
+// Default shortcuts
+const defaultShortcuts = [
+  {
+    url: "https://mail.google.com",
+    name: "Gmail",
+    icon: "https://www.google.com/s2/favicons?sz=64&domain_url=https://mail.google.com"
+  },
+  {
+    url: "https://www.youtube.com",
+    name: "YouTube",
+    icon: "https://www.google.com/s2/favicons?sz=64&domain_url=https://www.youtube.com"
+  },
+  {
+    url: "https://chatgpt.com",
+    name: "ChatGPT",
+    icon: "https://www.google.com/s2/favicons?sz=64&domain_url=https://chatgpt.com"
+  }
+];
+
 const headerShortcutsEl = document.getElementById('headerShortcuts');
-let headerShortcuts = JSON.parse(localStorage.getItem('headerShortcuts') || '[]');
+let headerShortcuts = JSON.parse(localStorage.getItem('headerShortcuts'));
+
+// Initialize with default shortcuts if none exist
+if (!headerShortcuts || headerShortcuts.length === 0) {
+  headerShortcuts = defaultShortcuts;
+  localStorage.setItem('headerShortcuts', JSON.stringify(headerShortcuts));
+}
 
 function renderShortcuts() {
   headerShortcutsEl.innerHTML = '';
@@ -476,12 +1403,16 @@ document.body.addEventListener('click', () => {
 });
 
 function addShortcut() {
-  const url = prompt("Enter shortcut URL (with https://):");
+  const url = prompt("Enter URL:");
   if (!url) return;
-  const name = prompt("Enter shortcut name:", new URL(url).hostname);
+  const name = prompt("Enter name:");
   if (!name) return;
-  const icon = "https://www.google.com/s2/favicons?sz=64&domain_url=" + url;
-  headerShortcuts.push({ url, name, icon });
+  let finalUrl = url;
+  if (!finalUrl.startsWith('http')) {
+    finalUrl = 'https://' + finalUrl;
+  }
+  const icon = "https://www.google.com/s2/favicons?sz=64&domain_url=" + finalUrl;
+  headerShortcuts.push({ url: finalUrl, name, icon });
   saveShortcuts();
 }
 
@@ -513,8 +1444,15 @@ function uploadBackground(event) {
   const reader = new FileReader();
   reader.onload = function(e) {
     document.body.style.backgroundImage = `url('${e.target.result}')`;
+    localStorage.setItem('customBackground', e.target.result);
   }
   reader.readAsDataURL(file);
+}
+
+// Load custom background if exists
+const customBackground = localStorage.getItem('customBackground');
+if (customBackground) {
+  document.body.style.backgroundImage = `url('${customBackground}')`;
 }
 
 const searchInput = document.getElementById('searchInput');
@@ -532,26 +1470,230 @@ function search() {
   if (!q) return;
   if (q.startsWith('http')) {
     window.open(q, '_blank');
+  } else if (q.includes('.') && !q.includes(' ')) {
+    window.open('https://' + q, '_blank');
   } else {
     window.open('https://www.google.com/search?q=' + encodeURIComponent(q), '_blank');
   }
 }
 
-function addSocialShortcut() {
-  const url = prompt("Enter social URL (with https://):");
-  if (!url) return;
-  const name = prompt("Enter social name:", new URL(url).hostname);
-  if (!name) return;
-  const iconUrl = prompt("Enter icon URL (64x64 preferred):", "https://www.google.com/s2/favicons?sz=64&domain_url=" + url);
-  const sidebar = document.getElementById('socialSidebar');
-  const div = document.createElement('div');
-  div.className = 'social-icon';
-  div.innerHTML = `<img src="${iconUrl}" alt="${name}"><span>${name}</span>`;
-  div.onclick = () => window.open(url, '_blank');
-  sidebar.insertBefore(div, sidebar.querySelector('.social-plus'));
+
+
+
+
+// Clock functionality
+function updateClock() {
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString();
+  const dateStr = now.toLocaleDateString(undefined, { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+  
+  document.getElementById('clockWidget').querySelector('.clock-time').textContent = timeStr;
+  document.getElementById('clockWidget').querySelector('.clock-date').textContent = dateStr;
 }
 
+
+
+// Notes functionality
+function loadNotes() {
+  const notes = localStorage.getItem('quickNotes') || '';
+  document.getElementById('notesTextarea').value = notes;
+}
+
+function saveNotes() {
+  const notes = document.getElementById('notesTextarea').value;
+  localStorage.setItem('quickNotes', notes);
+}
+
+function clearNotes() {
+  if (confirm('Clear all notes?')) {
+    document.getElementById('notesTextarea').value = '';
+    localStorage.removeItem('quickNotes');
+  }
+}
+
+function formatText(command) {
+  document.execCommand(command, false, null);
+}
+
+function autoSaveNotes() {
+  saveNotes();
+  const indicator = document.getElementById('autosaveIndicator');
+  indicator.textContent = 'Auto-saved';
+  setTimeout(() => indicator.textContent = '', 2000);
+}
+
+function clearAllNotes() {
+  if (confirm('Clear all notes?')) {
+    document.getElementById('notesTextarea').value = '';
+    localStorage.removeItem('quickNotes');
+  }
+}
+
+// Todo functionality
+function toggleAdvancedSettings() {
+  const advancedSection = document.getElementById('todoAdvancedSection');
+  const settingsBtn = document.getElementById('todoSettingsBtn');
+  advancedSection.classList.toggle('show');
+  settingsBtn.classList.toggle('active');
+}
+
+function addTodo() {
+  const input = document.getElementById('todoInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+
+  // Get advanced options if available
+  const dueDate = document.getElementById('todoDueDate').value;
+  const reminder = document.getElementById('todoReminder').value;
+
+  const newTodo = {
+    text: text,
+    completed: false,
+    priority: 'medium',
+    category: '',
+    dueDate: dueDate || null,
+    reminder: reminder || null,
+    createdAt: new Date().toISOString()
+  };
+
+  todos.push(newTodo);
+  localStorage.setItem('todos', JSON.stringify(todos));
+
+  input.value = '';
+  document.getElementById('todoDueDate').value = '';
+  document.getElementById('todoReminder').value = '';
+
+  loadTodos();
+}
+
+function loadTodos() {
+  let todos = JSON.parse(localStorage.getItem('todos') || '[]');
+
+  // Sort by due date, then priority
+  todos.sort((a, b) => {
+    if (a.dueDate && b.dueDate) {
+      return new Date(a.dueDate) - new Date(b.dueDate);
+    }
+    if (a.dueDate) return -1;
+    if (b.dueDate) return 1;
+    const priorityOrder = { high: 3, medium: 2, low: 1 };
+    return priorityOrder[b.priority || 'medium'] - priorityOrder[a.priority || 'medium'];
+  });
+
+  const todoList = document.getElementById('todoList');
+  todoList.innerHTML = '';
+
+  // Update notification badge
+  const pendingCount = todos.filter(todo => !todo.completed).length;
+  const badge = document.getElementById('todoNotificationBadge');
+  if (pendingCount > 0) {
+    badge.textContent = pendingCount;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+
+  if (todos.length === 0) {
+    todoList.innerHTML = `
+      <div class="todo-empty-state">
+        <h4>No tasks found</h4>
+        <p>Add a new task to get started!</p>
+      </div>
+    `;
+    return;
+  }
+
+  todos.forEach((todo, index) => {
+    const item = document.createElement('div');
+    item.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+    const priorityClass = todo.priority ? `priority-${todo.priority}` : '';
+    const dueDateStr = todo.dueDate ? new Date(todo.dueDate).toLocaleDateString() : '';
+    const dueDateClass = todo.dueDate ? (new Date(todo.dueDate) < new Date() ? 'overdue' : (new Date(todo.dueDate).toDateString() === new Date().toDateString() ? 'due-soon' : '')) : '';
+
+    item.innerHTML = `
+      <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''} onclick="toggleTodo(${index})">
+      <div class="todo-content">
+        <div class="todo-text">${todo.text}</div>
+        <div class="todo-meta">
+          ${todo.priority ? `<span class="todo-priority ${priorityClass}">${todo.priority}</span>` : ''}
+          ${todo.category ? `<span class="todo-category">${todo.category}</span>` : ''}
+          ${dueDateStr ? `<span class="todo-due-date ${dueDateClass}">${dueDateStr}</span>` : ''}
+        </div>
+      </div>
+      <div class="todo-actions">
+        <button class="todo-edit" onclick="editTodo(${index})">✏️</button>
+        <button class="todo-delete" onclick="deleteTodo(${index})">🗑️</button>
+      </div>
+    `;
+    todoList.appendChild(item);
+  });
+}
+
+
+function toggleTodo(index) {
+  const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+  todos[index].completed = !todos[index].completed;
+  localStorage.setItem('todos', JSON.stringify(todos));
+  loadTodos();
+}
+
+function editTodo(index) {
+  const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+  const todo = todos[index];
+
+  const newText = prompt('Edit task:', todo.text);
+  if (newText === null || !newText.trim()) return;
+
+  const newPriority = prompt('Edit priority (high, medium, low):', todo.priority || 'medium');
+  if (newPriority === null || !['high', 'medium', 'low'].includes(newPriority.toLowerCase())) return;
+
+  const newCategory = prompt('Edit category:', todo.category || '');
+  if (newCategory === null) return;
+
+  const newDueDate = prompt('Edit due date (YYYY-MM-DD):', todo.dueDate || '');
+  if (newDueDate === null) return;
+
+  todo.text = newText.trim();
+  todo.priority = newPriority.toLowerCase();
+  todo.category = newCategory.trim();
+  todo.dueDate = newDueDate;
+
+  localStorage.setItem('todos', JSON.stringify(todos));
+  loadTodos();
+}
+
+function deleteTodo(index) {
+  if (confirm('Delete this task?')) {
+    const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+    todos.splice(index, 1);
+    localStorage.setItem('todos', JSON.stringify(todos));
+    loadTodos();
+  }
+}
+
+
+
+
+
+// Initialize everything
 renderShortcuts();
+loadNotes();
+loadTodos();
+
+// Set up clock
+updateClock();
+setInterval(updateClock, 1000);
+
+// Try to get weather (you'll need to add your OpenWeatherMap API key)
+
+// Search placeholder animation
 const searchPhrases = [
   "Search here",
   "Find anything",
